@@ -1,18 +1,37 @@
 ﻿using Caliburn.Micro;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GogGameShortcutMaker.Models;
+using System.Collections.ObjectModel;
 
 namespace GogGameShortcutMaker.ViewModels
 {
-    public interface IMainViewModel
+    internal interface IMainViewModel
     {
-
+        ObservableCollection<IGameViewModel> Games { get; }
     }
 
-    public class MainViewModel : Screen, IMainViewModel
+    internal class MainViewModel : Screen, IMainViewModel
     {
+        private readonly IRepository repository;
+        private readonly IScanner scanner;
+
+        public MainViewModel(IRepository repository, IScanner scanner)
+        {
+            this.repository = repository;
+            this.scanner = scanner;
+        }
+
+        public void Scan()
+        {
+            scanner.ScanForGames();
+
+            foreach (var game in repository.Games)
+            {
+                Games.Add(new GameViewModel(game));
+            }
+        }
+
+
+
+        public ObservableCollection<IGameViewModel> Games { get; } = new ObservableCollection<IGameViewModel>();
     }
 }

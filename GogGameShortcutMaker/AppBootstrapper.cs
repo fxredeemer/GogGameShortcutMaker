@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using GogGameShortcutMaker.Models;
 using GogGameShortcutMaker.ViewModels;
 using Ninject;
 using System;
@@ -13,18 +14,17 @@ namespace GogGameShortcutMaker
 
         public AppBootstrapper()
         {
-            Console.WriteLine("jhkjsfhdkj");
             Initialize();
         }
-
 
         protected override void Configure()
         {
             kernel = new StandardKernel();
 
+            kernel.Bind<IRepository>().To<Repository>().InSingletonScope();
             kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
-            kernel.Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
             kernel.Bind<IMainViewModel>().To<MainViewModel>();
+            kernel.Bind<IScanner>().To<Scanner>();
         }
 
         protected override object GetInstance(Type service, string key)
