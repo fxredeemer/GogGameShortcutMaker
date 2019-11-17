@@ -26,6 +26,11 @@ namespace GogGameShortcutMaker.ViewModels
         {
             get
             {
+                if (settings.GamePaths == null)
+                {
+                    settings.GamePaths = new System.Collections.Specialized.StringCollection();
+                }
+
                 var paths = new ObservableCollection<string>();
                 foreach (string gamePath in settings.GamePaths)
                 {

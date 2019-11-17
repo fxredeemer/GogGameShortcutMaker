@@ -1,7 +1,5 @@
 ﻿using Caliburn.Micro;
-using GogGameShortcutMaker.Models;
 using GogGameShortcutMaker.Properties;
-using System.Collections.ObjectModel;
 
 namespace GogGameShortcutMaker.ViewModels
 {
@@ -16,7 +14,7 @@ namespace GogGameShortcutMaker.ViewModels
         private readonly Settings settings;
 
         public MainViewModel(
-            IGameListViewModel gameList, 
+            IGameListViewModel gameList,
             IConfigurationViewModel configuration,
             Settings settings)
         {
