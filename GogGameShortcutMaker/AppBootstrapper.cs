@@ -21,10 +21,14 @@ namespace GogGameShortcutMaker
         {
             kernel = new StandardKernel();
 
-            kernel.Bind<IRepository>().To<Repository>().InSingletonScope();
-            kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
-            kernel.Bind<IMainViewModel>().To<MainViewModel>();
             kernel.Bind<IScanner>().To<Scanner>();
+            kernel.Bind<IRepository>().To<Repository>().InSingletonScope();
+            
+            kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
+
+            kernel.Bind<IGameListViewModel>().To<GameListViewModel>();
+            kernel.Bind<IConfigurationViewModel>().To<ConfigurationViewModel>();
+            kernel.Bind<IMainViewModel>().To<MainViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)

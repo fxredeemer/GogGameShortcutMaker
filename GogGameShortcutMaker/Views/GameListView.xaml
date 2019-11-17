@@ -1,0 +1,37 @@
+﻿<Page x:Class="GogGameShortcutMaker.Views.GameListView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cal="http://www.caliburnproject.org"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GameListView">
+    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="_Settings"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+            <Button x:Name="Scan">Scan</Button>
+        </StackPanel>
+
+        <ListView x:Name="Games" DockPanel.Dock="Bottom">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Game" Width="150"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path}" Header="Path" Width="300"/>
+                    <GridViewColumn Header="MakeShortcut" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Make Shortcut" cal:Message.Attach="[Event Click] = [Action MakeShortcut]"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</Page>

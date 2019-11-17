@@ -22,5 +22,40 @@ namespace GogGameShortcutMaker.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string InstallationPath {
+            get {
+                return ((string)(this["InstallationPath"]));
+            }
+            set {
+                this["InstallationPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection GamePaths {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["GamePaths"]));
+            }
+            set {
+                this["GamePaths"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ConfigurationFinished {
+            get {
+                return ((bool)(this["ConfigurationFinished"]));
+            }
+            set {
+                this["ConfigurationFinished"] = value;
+            }
+        }
     }
 }

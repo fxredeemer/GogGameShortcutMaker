@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF" 
-        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800">
     <fw:AcrylicWindow.Resources>
@@ -19,32 +18,10 @@
             <Setter Property="Margin" Value="4"></Setter>
             <Setter Property="Padding" Value="8 0"></Setter>
         </Style>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </fw:AcrylicWindow.Resources>
-    <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="File">
-                <MenuItem Header="_Settings"></MenuItem>
-            </MenuItem>
-        </Menu>
-
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-            <Button x:Name="Scan">Scan</Button>
-        </StackPanel>
-        
-        <ListView x:Name="Games" DockPanel.Dock="Bottom">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Game" Width="150"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path}" Header="Path" Width="300"/>
-                    <GridViewColumn Header="MakeShortcut" Width="120">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Make Shortcut" cal:Message.Attach="[Event Click] = [Action MakeShortcut]"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </DockPanel>
+    <Grid>
+        <Frame x:Name="GameList" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToVisibilityConverter}}"></Frame>
+        <Frame x:Name="Configuration"></Frame>
+    </Grid>
 </fw:AcrylicWindow>
