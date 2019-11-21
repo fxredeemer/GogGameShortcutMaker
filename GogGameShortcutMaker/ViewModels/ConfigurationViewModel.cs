@@ -1,6 +1,11 @@
 ﻿using Caliburn.Micro;
 using GogGameShortcutMaker.Properties;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Windows.Input;
+using System.Linq;
+using Ookii.Dialogs.Wpf;
 
 namespace GogGameShortcutMaker.ViewModels
 {
@@ -16,50 +21,66 @@ namespace GogGameShortcutMaker.ViewModels
     internal class ConfigurationViewModel : Screen, IConfigurationViewModel
     {
         private readonly Settings settings;
+        private List<string> gamePaths = new List<string>();
 
         public ConfigurationViewModel(Settings settings)
         {
             this.settings = settings;
+
+            LoadSettings();
         }
 
-        public ObservableCollection<string> GamePaths
-        {
-            get
-            {
-                if (settings.GamePaths == null)
-                {
-                    settings.GamePaths = new System.Collections.Specialized.StringCollection();
-                }
 
-                var paths = new ObservableCollection<string>();
-                foreach (string gamePath in settings.GamePaths)
-                {
-                    paths.Add(gamePath);
-                }
-                return paths;
+        private void LoadSettings()
+        {
+            if (settings.GamePaths == null)
+            {
+                settings.GamePaths = new StringCollection();
             }
+
+            gamePaths = settings.GamePaths.Cast<string>().ToList();
         }
 
         public void SelectGogInstallationPath()
         {
+            var fileSelector = new VistaOpenFileDialog
+            {
+                Filter = "*.exe|*.exe"
+            };
 
+            if (fileSelector.ShowDialog() == true)
+            {
+                InstallationPath = fileSelector.FileName;
+                NotifyOfPropertyChange(nameof(InstallationPath));
+            }
         }
 
         public void AddPath()
         {
-
+            var folderSelector = new VistaFolderBrowserDialog();
+            
+            if (folderSelector.ShowDialog() == true)
+            {
+                gamePaths.Add(folderSelector.SelectedPath);
+                NotifyOfPropertyChange(nameof(GamePaths));
+            }
         }
 
-        public void RemovePath()
+        public void RemovePath(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Delete && sender is string path)
+            {
+                gamePaths.Remove(path);
+                NotifyOfPropertyChange(nameof(GamePaths));
+            }
         }
+
+        public ObservableCollection<string> GamePaths => new ObservableCollection<string>(gamePaths);
 
         public string InstallationPath
         {
             get => settings.InstallationPath;
             set => settings.InstallationPath = value;
         }
-
     }
 }

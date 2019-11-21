@@ -3,20 +3,36 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:cal="http://www.caliburnproject.org"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ConfigurationView">
+    <Page.Resources>
+        <Style TargetType="Button" >
+            <Setter Property="Padding" Value="8 4"/>
+        </Style>
+    </Page.Resources>
     <DockPanel>
-        <DockPanel DockPanel.Dock="Top" >
-            <Button x:Name="SelectGogInstallationPath" DockPanel.Dock="Right">Set Installation Path</Button>
+        <DockPanel DockPanel.Dock="Top" Margin="4" >
+            <Button x:Name="SelectGogInstallationPath" Margin="4 0 0 0" DockPanel.Dock="Right">Set Installation Path</Button>
             <TextBox x:Name="InstallationPath"/>
         </DockPanel>
-        <DockPanel DockPanel.Dock="Bottom">
+        <DockPanel DockPanel.Dock="Bottom" Margin="4">
             <Button DockPanel.Dock="Right">Save and Contine</Button>
             <Label/>
         </DockPanel>
-        <DockPanel DockPanel.Dock="Top">
-            <ListView ItemsSource="{Binding GamePaths}"/>
+        <DockPanel DockPanel.Dock="Top" Margin="4 0">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <Label VerticalAlignment="Center" FontSize="14" Margin="4">Game Folders</Label>
+                <Button Name="AddPath" Margin="4" Content="AddPath"/>
+            </StackPanel>
+            <ListView ItemsSource="{Binding GamePaths}" cal:Message.Attach="[Event KeyDown] = [Action RemovePath($this, $eventArgs)]">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Mode=OneWay}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </DockPanel>
     </DockPanel>
 </Page>
