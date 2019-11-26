@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF" 
+        xmlns:converters="clr-namespace:ValueConverters;assembly=ValueConverters"
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800">
     <fw:AcrylicWindow.Resources>
@@ -18,10 +19,11 @@
             <Setter Property="Margin" Value="4"></Setter>
             <Setter Property="Padding" Value="8 0"></Setter>
         </Style>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToInvertedVisibilityConverter" IsInverted="True"/>
     </fw:AcrylicWindow.Resources>
     <Grid>
         <Frame x:Name="GameList" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToVisibilityConverter}}"></Frame>
-        <Frame x:Name="Configuration"></Frame>
+        <Frame x:Name="Configuration" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToInvertedVisibilityConverter}}"></Frame>
     </Grid>
 </fw:AcrylicWindow>

@@ -25,6 +25,7 @@ namespace GogGameShortcutMaker
             kernel.Bind<IRepository>().To<Repository>().InSingletonScope();
             
             kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
+            kernel.Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
 
             kernel.Bind<IGameListViewModel>().To<GameListViewModel>();
             kernel.Bind<IConfigurationViewModel>().To<ConfigurationViewModel>();

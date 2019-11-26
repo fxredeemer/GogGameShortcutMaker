@@ -18,7 +18,7 @@
             <TextBox x:Name="InstallationPath"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Bottom" Margin="4">
-            <Button DockPanel.Dock="Right">Save and Contine</Button>
+            <Button x:Name="SaveAndContinue" DockPanel.Dock="Right">Save and Contine</Button>
             <Label/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Top" Margin="4 0">

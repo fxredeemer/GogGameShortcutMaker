@@ -21,15 +21,17 @@ namespace GogGameShortcutMaker.ViewModels
     internal class ConfigurationViewModel : Screen, IConfigurationViewModel
     {
         private readonly Settings settings;
+        private readonly IEventAggregator eventAggregator;
         private List<string> gamePaths = new List<string>();
 
-        public ConfigurationViewModel(Settings settings)
+        public ConfigurationViewModel(
+            Settings settings,
+            IEventAggregator eventAggregator)
         {
             this.settings = settings;
-
+            this.eventAggregator = eventAggregator;
             LoadSettings();
         }
-
 
         private void LoadSettings()
         {
@@ -53,6 +55,16 @@ namespace GogGameShortcutMaker.ViewModels
                 InstallationPath = fileSelector.FileName;
                 NotifyOfPropertyChange(nameof(InstallationPath));
             }
+        }
+
+        public void SaveAndContinue()
+        {
+            settings.ConfigurationFinished = true;
+            settings.GamePaths.Clear();
+            settings.GamePaths.AddRange(gamePaths.ToArray());
+            settings.InstallationPath = InstallationPath;
+            settings.Save();
+            eventAggregator.PublishOnCurrentThread("");
         }
 
         public void AddPath()
