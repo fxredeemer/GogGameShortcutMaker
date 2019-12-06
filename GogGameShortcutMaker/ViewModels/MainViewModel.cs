@@ -33,6 +33,8 @@ namespace GogGameShortcutMaker.ViewModels
 
         public void Handle(string message)
         {
+            settings.Reload();
+
             NotifyOfPropertyChange(nameof(ConfigurationDone));
         }
     }

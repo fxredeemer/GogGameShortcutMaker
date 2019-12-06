@@ -74,7 +74,7 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Repository.cs" />
-    <Compile Include="Models\Scanner.cs" />
+    <Compile Include="Tools\Scanner.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\GameListViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
