@@ -37,5 +37,13 @@ namespace GogGameShortcutMaker.ViewModels
 
             NotifyOfPropertyChange(nameof(ConfigurationDone));
         }
+
+        public void Configure()
+        {
+            settings.ConfigurationFinished = false;
+            settings.Save();
+
+            NotifyOfPropertyChange(nameof(ConfigurationDone));
+        }
     }
 }
