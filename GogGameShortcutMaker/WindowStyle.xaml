@@ -13,6 +13,7 @@
         <Setter Property="Margin" Value="4"></Setter>
         <Setter Property="Padding" Value="8 0"></Setter>
     </Style>
+    <converters:BoolInverter x:Key="BoolInverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:BoolToVisibilityConverter x:Key="BoolToInvertedVisibilityConverter" IsInverted="True"/>
 </ResourceDictionary>

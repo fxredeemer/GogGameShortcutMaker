@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using GogGameShortcutMaker.Models;
+using GogGameShortcutMaker.Tools;
 using System.Collections.ObjectModel;
 
 namespace GogGameShortcutMaker.ViewModels
@@ -15,18 +16,25 @@ namespace GogGameShortcutMaker.ViewModels
     {
         private readonly IRepository repository;
         private readonly IScanner scanner;
+        private readonly IEventAggregator eventAggregator;
 
         public GameListViewModel(
             IRepository repository,
-            IScanner scanner)
+            IScanner scanner,
+            IEventAggregator eventAggregator)
         {
             this.repository = repository;
             this.scanner = scanner;
+            this.eventAggregator = eventAggregator;
         }
 
-        public void Scan()
+        public async void Scan()
         {
-            scanner.ScanForGames();
+            eventAggregator.BeginPublishOnUIThread(NotificationConstants.ScanningStarted);
+            
+            await scanner.ScanForGames();
+
+            eventAggregator.BeginPublishOnUIThread(NotificationConstants.ScanningDone);
 
             foreach (var game in repository.Games)
             {

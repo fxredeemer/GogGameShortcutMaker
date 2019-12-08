@@ -6,6 +6,7 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using System.Linq;
 using Ookii.Dialogs.Wpf;
+using GogGameShortcutMaker.Tools;
 
 namespace GogGameShortcutMaker.ViewModels
 {
@@ -64,7 +65,7 @@ namespace GogGameShortcutMaker.ViewModels
             settings.GamePaths.AddRange(gamePaths.ToArray());
             settings.InstallationPath = InstallationPath;
             settings.Save();
-            eventAggregator.PublishOnCurrentThread("");
+            eventAggregator.PublishOnCurrentThread(NotificationConstants.ConfigurationDone);
         }
 
         public void AddPath()

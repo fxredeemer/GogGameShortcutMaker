@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GogGameShortcutMaker.Models
 {
     internal interface IScanner
     {
-        void ScanForGames();
+        Task ScanForGames();
     }
 
     internal class Scanner : IScanner
@@ -24,21 +25,24 @@ namespace GogGameShortcutMaker.Models
             this.gameInfoParser = gameInfoParser;
         }
 
-        public void ScanForGames()
+        public async Task ScanForGames()
         {
-            foreach (string path in Settings.Default.GamePaths)
+            await Task.Run(() =>
             {
-                var directory = new DirectoryInfo(path);
-                var readableFolders = GetDirectoriesRecursive(directory);
-
-                var infoFiles = readableFolders.SelectMany(d => d.GetFiles("gog*.info")).ToList();
-
-                foreach (var infoFile in infoFiles)
+                foreach (string path in Settings.Default.GamePaths)
                 {
-                    string filePath = infoFile.FullName;
-                    repository.Games.Add(new GamePathInfo(gameInfoParser.ParseGameInfo(filePath), filePath));
+                    var directory = new DirectoryInfo(path);
+                    var readableFolders = GetDirectoriesRecursive(directory);
+
+                    var infoFiles = readableFolders.SelectMany(d => d.GetFiles("gog*.info")).ToList();
+
+                    foreach (var infoFile in infoFiles)
+                    {
+                        string filePath = infoFile.FullName;
+                        repository.Games.Add(new GamePathInfo(gameInfoParser.ParseGameInfo(filePath), filePath));
+                    }
                 }
-            }
+            }).ConfigureAwait(false);
         }
 
         public IEnumerable<DirectoryInfo> GetDirectoriesRecursive(DirectoryInfo directory)

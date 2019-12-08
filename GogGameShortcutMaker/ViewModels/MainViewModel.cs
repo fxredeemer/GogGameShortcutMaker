@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using GogGameShortcutMaker.Properties;
+using GogGameShortcutMaker.Tools;
 
 namespace GogGameShortcutMaker.ViewModels
 {
@@ -13,6 +14,7 @@ namespace GogGameShortcutMaker.ViewModels
     internal class MainViewModel : Screen, IHandle<string>, IMainViewModel
     {
         private readonly Settings settings;
+        private bool scanning;
 
         public MainViewModel(
             IGameListViewModel gameList,
@@ -28,14 +30,33 @@ namespace GogGameShortcutMaker.ViewModels
         }
 
         public bool ConfigurationDone => settings.ConfigurationFinished;
+        public bool Scanning
+        {
+            get => scanning;
+            private set
+            {
+                scanning = value;
+                NotifyOfPropertyChange();
+            }
+        }
         public IGameListViewModel GameList { get; }
         public IConfigurationViewModel Configuration { get; }
 
         public void Handle(string message)
         {
-            settings.Reload();
-
-            NotifyOfPropertyChange(nameof(ConfigurationDone));
+            switch (message)
+            {
+                case NotificationConstants.ConfigurationDone:
+                    settings.Reload();
+                    NotifyOfPropertyChange(nameof(ConfigurationDone));
+                    break;
+                case NotificationConstants.ScanningStarted:
+                    Scanning = true;
+                    break;
+                case NotificationConstants.ScanningDone:
+                    Scanning = false;
+                    break;
+            }
         }
 
         public void Configure()

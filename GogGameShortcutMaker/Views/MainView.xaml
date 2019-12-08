@@ -5,21 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
         xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800"
         TitleBarForeground="Black" TitleBarBackground="#ffcc0066" WindowButtonHighlightBrush="Red">
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}"/>
     </Window.Style>
-    <DockPanel VerticalAlignment="Stretch">
-        <Menu DockPanel.Dock="Top">
+    <DockPanel VerticalAlignment="Stretch" >
+        <Menu DockPanel.Dock="Top" IsEnabled="{Binding Scanning, Converter={StaticResource  BoolInverter}}" >
             <MenuItem Header="Edit">
                 <MenuItem x:Name="Configure" Header="Configure"/>
             </MenuItem>
         </Menu>
         <Grid VerticalAlignment="Stretch">
-            <ContentControl x:Name="GameList" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToVisibilityConverter}}"></ContentControl>
-            <ContentControl x:Name="Configuration" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToInvertedVisibilityConverter}}"></ContentControl>
+            <ContentControl x:Name="GameList" IsEnabled="{Binding Scanning, Converter={StaticResource  BoolInverter}}"  Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToVisibilityConverter}}"></ContentControl>
+            <ContentControl x:Name="Configuration" IsEnabled="{Binding Scanning, Converter={StaticResource  BoolInverter}}" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToInvertedVisibilityConverter}}"></ContentControl>
+            <Grid Visibility="{Binding Scanning, Converter={StaticResource BoolToVisibilityConverter}}" >
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel>
+                        <Label FontSize="50" Margin="10">Scanning</Label>
+                        <fa:ImageAwesome Height="60" Width="60" Icon="Cog" Spin="True" SpinDuration="4"   />
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </Grid>
     </DockPanel>
 </adonisControls:AdonisWindow>
