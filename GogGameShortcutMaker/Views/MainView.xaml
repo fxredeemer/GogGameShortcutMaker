@@ -11,15 +11,15 @@
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}"/>
     </Window.Style>
-    <StackPanel>
-        <Menu>
+    <DockPanel VerticalAlignment="Stretch">
+        <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Edit">
                 <MenuItem x:Name="Configure" Header="Configure"/>
             </MenuItem>
         </Menu>
-        <Grid>
-            <Frame x:Name="GameList" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToVisibilityConverter}}"></Frame>
-            <Frame x:Name="Configuration" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToInvertedVisibilityConverter}}"></Frame>
+        <Grid VerticalAlignment="Stretch">
+            <ContentControl x:Name="GameList" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToVisibilityConverter}}"></ContentControl>
+            <ContentControl x:Name="Configuration" Visibility="{Binding ConfigurationDone, Converter={StaticResource BoolToInvertedVisibilityConverter}}"></ContentControl>
         </Grid>
-    </StackPanel>
+    </DockPanel>
 </adonisControls:AdonisWindow>
