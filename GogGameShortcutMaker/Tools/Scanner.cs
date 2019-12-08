@@ -14,10 +14,14 @@ namespace GogGameShortcutMaker.Models
     internal class Scanner : IScanner
     {
         private readonly IRepository repository;
+        private readonly IGameInfoParser gameInfoParser;
 
-        public Scanner(IRepository repository)
+        public Scanner(
+            IRepository repository,
+            IGameInfoParser gameInfoParser)
         {
             this.repository = repository;
+            this.gameInfoParser = gameInfoParser;
         }
 
         public void ScanForGames()
@@ -31,7 +35,8 @@ namespace GogGameShortcutMaker.Models
 
                 foreach (var infoFile in infoFiles)
                 {
-                    repository.Games.Add(new Game(infoFile.Name, infoFile.FullName));
+                    string filePath = infoFile.FullName;
+                    repository.Games.Add(new GamePathInfo(gameInfoParser.ParseGameInfo(filePath), filePath));
                 }
             }
         }

@@ -22,6 +22,7 @@ namespace GogGameShortcutMaker
             kernel = new StandardKernel();
 
             kernel.Bind<IScanner>().To<Scanner>();
+            kernel.Bind<IGameInfoParser>().To<GameInfoParser>();
             kernel.Bind<IRepository>().To<Repository>().InSingletonScope();
             
             kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();

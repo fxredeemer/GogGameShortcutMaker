@@ -4,11 +4,11 @@ namespace GogGameShortcutMaker.Models
 {
     internal interface IRepository
     {
-        IList<IGame> Games { get; }
+        IList<IGamePathInfo> Games { get; }
     }
 
     internal class Repository : IRepository
     {
-        public IList<IGame> Games { get; } = new List<IGame>();
+        public IList<IGamePathInfo> Games { get; } = new List<IGamePathInfo>();
     }
 }

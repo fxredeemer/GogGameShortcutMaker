@@ -12,9 +12,9 @@ namespace GogGameShortcutMaker.ViewModels
 
     class GameViewModel : IGameViewModel
     {
-        private readonly IGame game;
+        private readonly IGamePathInfo game;
 
-        public GameViewModel(IGame game)
+        public GameViewModel(IGamePathInfo game)
         {
             this.game = game;
         }
