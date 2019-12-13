@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using GogGameShortcutMaker.Models;
+using GogGameShortcutMaker.Tools;
 using GogGameShortcutMaker.ViewModels;
 using Ninject;
 using System;
@@ -14,6 +15,15 @@ namespace GogGameShortcutMaker
 
         public AppBootstrapper()
         {
+            var parser = new GameInfoParser();
+            var shortcutMaker = new DesktopShortcutMaker();
+
+            var gameInfo = parser.ParseGameInfo(@"C:\Program Files (x86)\GOG Galaxy\Games\Into the Breach\goggame-2004253604.info");
+            shortcutMaker.MakeShortcut(gameInfo);
+
+
+
+
             Initialize();
         }
 

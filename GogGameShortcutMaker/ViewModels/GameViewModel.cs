@@ -1,4 +1,5 @@
 ﻿using GogGameShortcutMaker.Models;
+using GogGameShortcutMaker.Tools;
 
 namespace GogGameShortcutMaker.ViewModels
 {
@@ -10,7 +11,7 @@ namespace GogGameShortcutMaker.ViewModels
         void MakeShortcut();
     }
 
-    class GameViewModel : IGameViewModel
+    internal class GameViewModel : IGameViewModel
     {
         private readonly IGamePathInfo game;
 
@@ -25,6 +26,11 @@ namespace GogGameShortcutMaker.ViewModels
 
         public void MakeShortcut()
         {
+            var parser = new GameInfoParser();
+            var gameInfo = parser.ParseGameInfo(Path);
+
+
+
             System.Console.WriteLine("Whazzup");
         }
     }

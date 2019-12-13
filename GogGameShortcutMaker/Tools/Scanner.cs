@@ -1,4 +1,5 @@
 ﻿using GogGameShortcutMaker.Properties;
+using GogGameShortcutMaker.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;

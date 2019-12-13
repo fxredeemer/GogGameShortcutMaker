@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using GogGameShortcutMaker.Models;
+using Newtonsoft.Json;
 using System.IO;
 
-namespace GogGameShortcutMaker.Models
+namespace GogGameShortcutMaker.Tools
 {
     internal interface IGameInfoParser
     {
@@ -14,7 +15,11 @@ namespace GogGameShortcutMaker.Models
         {
             string fileContent = File.ReadAllText(path);
 
-            return JsonConvert.DeserializeObject<GameInfo>(fileContent);
+            var gameInfo = JsonConvert.DeserializeObject<GameInfo>(fileContent);
+
+            gameInfo.Path = path;
+
+            return gameInfo;
         }
     }
 }
