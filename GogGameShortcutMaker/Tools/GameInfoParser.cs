@@ -13,13 +13,23 @@ namespace GogGameShortcutMaker.Tools
     {
         public GameInfo ParseGameInfo(string path)
         {
-            string fileContent = File.ReadAllText(path);
+            var fileContent = File.ReadAllText(path);
 
             var gameInfo = JsonConvert.DeserializeObject<GameInfo>(fileContent);
 
+            TryAddIcon(gameInfo, path);
             gameInfo.Path = path;
 
             return gameInfo;
+        }
+
+        private void TryAddIcon(GameInfo gameInfo, string path)
+        {
+            var iconPath = $"{Path.GetDirectoryName(path)}\\{Path.GetFileNameWithoutExtension(path)}.ico";
+            if (File.Exists(iconPath))
+            {
+                gameInfo.Icon = iconPath;
+            }
         }
     }
 }

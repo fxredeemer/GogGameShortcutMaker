@@ -18,11 +18,8 @@ namespace GogGameShortcutMaker
             var parser = new GameInfoParser();
             var shortcutMaker = new DesktopShortcutMaker();
 
-            var gameInfo = parser.ParseGameInfo(@"C:\Program Files (x86)\GOG Galaxy\Games\Into the Breach\goggame-2004253604.info");
+            var gameInfo = parser.ParseGameInfo(@"D:\Morrowind\goggame-1435828767.info");
             shortcutMaker.MakeShortcut(gameInfo);
-
-
-
 
             Initialize();
         }

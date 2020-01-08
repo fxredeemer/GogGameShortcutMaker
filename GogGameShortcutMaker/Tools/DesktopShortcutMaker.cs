@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using GogGameShortcutMaker.Models;
+﻿using GogGameShortcutMaker.Models;
 using GogGameShortcutMaker.Properties;
 using IWshRuntimeLibrary;
+using System;
+using System.IO;
 
 namespace GogGameShortcutMaker.Tools
 {
@@ -17,18 +12,29 @@ namespace GogGameShortcutMaker.Tools
         {
             var galaxyPath = Settings.Default.InstallationPath;
 
-
             var startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             var shell = new WshShell();
-            //var shortCutLinkFilePath = $@"{startupFolderPath}\{ gameInfo.Name}.lnk";
-            var shortCutLinkFilePath = $@"{startupFolderPath}\AAAAAAAAAAAAAAAa.lnk";
+            var sanitizedName = SanitizePath(gameInfo.Name);
+            var shortCutLinkFilePath = $@"{startupFolderPath}\{sanitizedName}.lnk";
 
             var windowsApplicationShortcut = (IWshShortcut)shell.CreateShortcut(shortCutLinkFilePath);
-            windowsApplicationShortcut.Description = $"{gameInfo.Name}";
-            windowsApplicationShortcut.WorkingDirectory = galaxyPath;
-            windowsApplicationShortcut.TargetPath = gameInfo.Path;
-            windowsApplicationShortcut.RelativePath = gameInfo.Name;
+            windowsApplicationShortcut.WorkingDirectory = Path.GetDirectoryName(galaxyPath);
+            windowsApplicationShortcut.Arguments = $@"/command=runGame /gameId={gameInfo.GameId} /path=""{gameInfo.Path}""";
+            windowsApplicationShortcut.TargetPath = galaxyPath;
+            windowsApplicationShortcut.IconLocation = gameInfo.Icon ?? windowsApplicationShortcut.IconLocation;
             windowsApplicationShortcut.Save();
+        }
+
+        private static string SanitizePath(string path)
+        {
+            var invalidChars = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+
+            foreach (var c in invalidChars)
+            {
+                path = path.Replace(c.ToString(), "");
+            }
+
+            return path;
         }
     }
 }

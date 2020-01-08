@@ -8,6 +8,7 @@ namespace GogGameShortcutMaker.Models
         public string GameId { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
+        public string Icon { get; set; }
         public List<PlayTask> PlayTasks { get; set; }
     }
 
