@@ -6,7 +6,12 @@ using System.IO;
 
 namespace GogGameShortcutMaker.Tools
 {
-    class DesktopShortcutMaker
+    interface IDesktopShortcutMaker
+    {
+        void MakeShortcut(GameInfo gameInfo);
+    }
+
+    class DesktopShortcutMaker : IDesktopShortcutMaker
     {
         public void MakeShortcut(GameInfo gameInfo)
         {

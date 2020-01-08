@@ -15,12 +15,6 @@ namespace GogGameShortcutMaker
 
         public AppBootstrapper()
         {
-            var parser = new GameInfoParser();
-            var shortcutMaker = new DesktopShortcutMaker();
-
-            var gameInfo = parser.ParseGameInfo(@"D:\Morrowind\goggame-1435828767.info");
-            shortcutMaker.MakeShortcut(gameInfo);
-
             Initialize();
         }
 
@@ -30,6 +24,8 @@ namespace GogGameShortcutMaker
 
             kernel.Bind<IScanner>().To<Scanner>();
             kernel.Bind<IGameInfoParser>().To<GameInfoParser>();
+            kernel.Bind<IGameViewModelFactory>().To<GameViewModelFactory>().InSingletonScope();
+            kernel.Bind<IDesktopShortcutMaker>().To<DesktopShortcutMaker>();
             kernel.Bind<IRepository>().To<Repository>().InSingletonScope();
             
             kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();

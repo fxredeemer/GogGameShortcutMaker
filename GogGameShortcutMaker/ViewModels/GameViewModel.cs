@@ -14,10 +14,17 @@ namespace GogGameShortcutMaker.ViewModels
     internal class GameViewModel : IGameViewModel
     {
         private readonly IGamePathInfo game;
+        private readonly IGameInfoParser gameInfoParser;
+        private readonly IDesktopShortcutMaker desktopShortcutMaker;
 
-        public GameViewModel(IGamePathInfo game)
+        public GameViewModel(
+            IGamePathInfo game,
+            IGameInfoParser gameInfoParser,
+            IDesktopShortcutMaker desktopShortcutMaker)
         {
             this.game = game;
+            this.gameInfoParser = gameInfoParser;
+            this.desktopShortcutMaker = desktopShortcutMaker;
         }
 
         public string Name => game.Name;
@@ -26,12 +33,8 @@ namespace GogGameShortcutMaker.ViewModels
 
         public void MakeShortcut()
         {
-            var parser = new GameInfoParser();
-            var gameInfo = parser.ParseGameInfo(Path);
-
-
-
-            System.Console.WriteLine("Whazzup");
+            var gameInfo = gameInfoParser.ParseGameInfo(Path);
+            desktopShortcutMaker.MakeShortcut(gameInfo);
         }
     }
 }
